@@ -1,0 +1,84 @@
+---
+title: "Project 3: project3package Tutorial"
+author: Sabrina Yu & Yining Li
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Project 3: PACKAGE_NAME Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(project3)
+library(class)
+library(palmerpenguins)
+library(randomForest)
+library(magrittr)
+library(dplyr)
+data(my_gapminder)
+library(tibble)
+library(ggplot2)
+```
+
+## 1. Introduction
+
+This is the final project for STAT302. A package called "project3" is created, and it includes four functions: `my_t_test`, `my_lm`, `my_knn_cv`, and `my_rf_cv``.
+package collaborators: Sabrina Yu & Yining Li
+The guide to install the package:
+
+```{r, eval = FALSE}
+devtools::install_github("SabrinaYuY/project3", build_vignette = TRUE, build_opts = c())
+library(project3)
+# Use this to view the vignette in the Demo HTML help
+help(package = "project3", help_type = "html")
+# Use this to view the vignette as an isolated HTML file
+utils::browseVignettes(package = "project3")
+```
+## 2. Tutorial for `my_t.test`
+
+Use the `lifeExp` data from `my_gapminder` for the following tests
+
+### Case I: alternative = "two.sided"
+ \begin{align}
+  H_0: \mu &= 60,\\
+  H_a: \mu &\neq 60.
+  \end{align}
+  
+```{r}
+# perform t-test with the alternative = two.sided
+my_t.test(my_gapminder$lifeExp, mu = 60, alternative = "two.sided")
+```
+In this case, p-value is 0.093, which is greater than 0.05. Thus the result is not statistically significant.
+We don't have enough evidence to reject the null hypothesis.
+
+### Case II: alternative = "less"
+  \begin{align}
+  H_0: \mu &= 60,\\
+  H_a: \mu &< 60.
+  \end{align}
+  
+```{r}
+# perform t-test with the alternative = less
+my_t.test(my_gapminder$lifeExp, mu = 60, alternative = "less")
+```
+In this case, p-value is 0.047, which is less than 0.05. Thus the result is statistically significant.
+We do have enough evidence to reject the null hypothesis. 
+
+### case III: alternative = "greater"
+  \begin{align}
+  H_0: \mu &= 60,\\
+  H_a: \mu &> 60.
+  \end{align}
+```{r}
+# perform t-test with the alternative = greater
+my_t.test(my_gapminder$lifeExp, mu = 60, alternative = "greater")
+```
+In this case, p-value is 0.0953, which is greater than 0.05. Thus the result is not statistically significant.
+We don't have enough evidence to reject the null hypothesis.
